@@ -36,7 +36,6 @@ include $(BUILD_STATIC_LIBRARY)
 
 # Execute make prepare for normal config & static lib (recovery)
 
-LOCAL_PATH := $(BB_PATH)
 include $(CLEAR_VARS)
 
 BUSYBOX_CROSS_COMPILER_PREFIX := $(abspath $(TARGET_TOOLS_PREFIX))
@@ -71,9 +70,6 @@ $(busybox_prepare_minimal): $(BB_PATH)/busybox-minimal.config
 
 #####################################################################
 
-LOCAL_PATH := $(BB_PATH)
-include $(CLEAR_VARS)
-
 KERNEL_MODULES_DIR ?= /system/lib/modules
 
 SUBMAKE := make -s -C $(BB_PATH) CC=$(CC)
@@ -97,10 +93,7 @@ endif
 BUSYBOX_C_INCLUDES = \
 	$(BB_PATH)/include $(BB_PATH)/libbb \
 	bionic/libc/private \
-	bionic/libm/include \
 	bionic/libc \
-	bionic/libm \
-	libc/kernel/common \
 	external/libselinux/include \
 	external/selinux/libsepol/include \
 	$(BB_PATH)/android/regex \
@@ -109,7 +102,6 @@ BUSYBOX_C_INCLUDES = \
 BUSYBOX_CFLAGS = \
 	-Wno-clobbered \
 	-DNDEBUG \
-	-DANDROID \
 	-fno-strict-aliasing \
 	-fno-builtin-stpcpy \
 	-include $(bb_gen)/$(BUSYBOX_CONFIG)/include/autoconf.h \
@@ -154,7 +146,6 @@ include $(BUILD_STATIC_LIBRARY)
 
 # Bionic Busybox /system/xbin
 
-LOCAL_PATH := $(BB_PATH)
 include $(CLEAR_VARS)
 
 BUSYBOX_CONFIG:=full
@@ -193,7 +184,6 @@ ALL_MODULES.$(LOCAL_MODULE).INSTALLED := \
 
 # Static Busybox
 
-LOCAL_PATH := $(BB_PATH)
 include $(CLEAR_VARS)
 
 BUSYBOX_CONFIG:=full
